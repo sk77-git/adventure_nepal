@@ -17,4 +17,15 @@ class AppImages {
   static const String rafting = "assets/places/rafting.png";
   static const String paragliding = "assets/places/paragliding.png";
   static const String camping = "assets/places/camping.png";
+
+  List<String> images= [
+    AppImages.chandragiri,
+    AppImages.dhulikhel,
+    AppImages.nagarkot,
+    AppImages.fifityFiveWindow,
+    AppImages.bktDurbarSquare,
+    AppImages.nyatapola,
+    AppImages.mountain,
+    AppImages.saaga,
+  ];
 }
