@@ -1,4 +1,5 @@
 import 'package:adventure_nepal/app/modules/dashboard/views/dashboard_view.dart';
+import 'package:adventure_nepal/app/modules/home/views/home_page.dart';
 import 'package:adventure_nepal/app/theme/app_dimens.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -78,7 +79,8 @@ class WelcomeView extends GetView<WelcomeController> {
                         ),
                         AppButton(
                           onTap: () {
-                            Get.offAll(() => DashboardView());
+                            // Get.offAll(() => DashboardView());
+                            Get.offAll(() => HomePage());
                           },
                           text: "  Let's Go  ",
                         )

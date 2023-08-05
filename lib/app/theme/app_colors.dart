@@ -7,6 +7,8 @@ class AppColors {
   static const Color black = Colors.black;
   static const Color textColor = Colors.black;
   static Color bgColor = Colors.grey.shade50;
+  // static Color orange = Colors.orange;
+  static const secondary = Color(0xFFFDD159);
 
   //Appbar theme
   static Color appBarColor = Colors.grey.shade50;

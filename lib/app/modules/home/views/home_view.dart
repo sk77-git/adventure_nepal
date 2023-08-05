@@ -63,7 +63,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(child: weatherWidget(context), preferredSize: Size.fromHeight(70)),
+      appBar: weatherAppBar(),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Container(
@@ -300,7 +300,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
   }
 
 
-  Widget weatherWidget(BuildContext context) {
+ /* Widget weatherWidget(BuildContext context) {
     return Obx(() {
       final response = controller.weatherResponse.value;
       switch (response.status) {
@@ -318,7 +318,7 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
           return weatherAppBar();
       }
     });
-  }
+  }*/
 
   /*AppBar appBar(){
     return AppBar(
