@@ -1,31 +1,36 @@
-import 'dart:developer';
-
+import 'package:adventure_nepal/app/modules/home/model/activities_response.dart';
+import 'package:adventure_nepal/app/modules/home/model/place_response.dart';
+import 'package:adventure_nepal/app/repository/activities_repo.dart';
 import 'package:adventure_nepal/app/repository/main_repo.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 
-import '../../../api/api.dart';
 import '../../../api/api_client.dart';
+import '../../../repository/places_repo.dart';
 import '../../../theme/app_colors.dart';
 import '../model/weather_response.dart';
-import 'package:geolocator/geolocator.dart';
-
 
 class HomeController extends GetxController {
+  final isLoading = true.obs;
+  final isLocationSaved = false.obs;
 
-  final  isLoading= true.obs;
-  final  isLocationSaved= false.obs;
   //final weatherResponse= <WeatherResponse>[];
 
   var weatherResponse = ApiResponse<WeatherResponse>.initial().obs;
+  var placesResponse = ApiResponse<PlacesResponse>.initial().obs;
+  var activitiesResponse = ApiResponse<ActivitiesResponse>.initial().obs;
 
   String? _currentAddress;
   Position? _currentPosition;
-  var searchTextFieldController= TextEditingController();
+  var searchTextFieldController = TextEditingController();
+
   @override
   void onInit() {
     super.onInit();
     _getCurrentPosition();
+    _getPlaces();
+    _getActivities();
   }
 
   @override
@@ -38,7 +43,6 @@ class HomeController extends GetxController {
     super.onClose();
   }
 
-
   /*void getWeather(String location) async {
     isLoading.value = true;
     var data = await Api().fetchWeather(location);
@@ -50,8 +54,6 @@ class HomeController extends GetxController {
     isLoading.value = false;
   }*/
 
-
-
   Future<void> _getCurrentPosition() async {
     final hasPermission = await _handleLocationPermission();
     if (!hasPermission) {
@@ -59,12 +61,12 @@ class HomeController extends GetxController {
       getWeather("Kathmandu");
       return;
     }
-    await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high)
+    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
         .then((Position position) {
       _currentPosition = position;
       /*If location got, then get weather by lat lang*/
-      getWeather("${_currentPosition?.latitude},${_currentPosition?.longitude}");
+      getWeather(
+          "${_currentPosition?.latitude},${_currentPosition?.longitude}");
       // _getAddressFromLatLng(_currentPosition!);
     }).catchError((e) {
       debugPrint(e);
@@ -78,7 +80,10 @@ class HomeController extends GetxController {
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      Get.snackbar("GPS not turned ON", "Location services are disabled. Please enable the services and refresh the page.",snackPosition: SnackPosition.BOTTOM, backgroundColor: AppColors.whiteGrey);
+      Get.snackbar("GPS not turned ON",
+          "Location services are disabled. Please enable the services and refresh the page.",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: AppColors.whiteGrey);
       return false;
     }
     permission = await Geolocator.checkPermission();
@@ -90,7 +95,10 @@ class HomeController extends GetxController {
       }
     }
     if (permission == LocationPermission.deniedForever) {
-      Get.snackbar("Permission Denied, Search Location Manually", "Location permissions are permanently denied, we cannot request permissions.", snackPosition: SnackPosition.BOTTOM, backgroundColor: AppColors.whiteGrey);
+      Get.snackbar("Permission Denied, Search Location Manually",
+          "Location permissions are permanently denied, we cannot request permissions.",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: AppColors.whiteGrey);
       return false;
     }
     return true;
@@ -100,5 +108,17 @@ class HomeController extends GetxController {
     weatherResponse.value = ApiResponse<WeatherResponse>.loading();
     final response = await MainRepo.getWeather(location);
     weatherResponse.value = response;
+  }
+
+  Future<void> _getPlaces() async {
+    placesResponse.value = ApiResponse<PlacesResponse>.loading();
+    final response = await PlacesRepo.getPlaces();
+    placesResponse.value = response;
+  }
+
+  Future<void> _getActivities() async {
+    activitiesResponse.value = ApiResponse<ActivitiesResponse>.loading();
+    final response = await ActivitiesRepo.getActivities();
+    activitiesResponse.value = response;
   }
 }

@@ -9,7 +9,7 @@ class WeatherResponse {
         ? new Location.fromJson(json['location'])
         : null;
     current =
-    json['current'] != null ? new Current.fromJson(json['current']) : null;
+        json['current'] != null ? new Current.fromJson(json['current']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -36,13 +36,13 @@ class Location {
 
   Location(
       {this.name,
-        this.region,
-        this.country,
-        this.lat,
-        this.lon,
-        this.tzId,
-        this.localtimeEpoch,
-        this.localtime});
+      this.region,
+      this.country,
+      this.lat,
+      this.lon,
+      this.tzId,
+      this.localtimeEpoch,
+      this.localtime});
 
   Location.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -86,7 +86,7 @@ class Current {
   dynamic? precipIn;
   dynamic? humidity;
   dynamic? cloud;
-  dynamic? feelslikeC;
+  num? feelslikeC;
   dynamic? feelslikeF;
   dynamic? visKm;
   dynamic? visMiles;
@@ -96,28 +96,28 @@ class Current {
 
   Current(
       {this.lastUpdatedEpoch,
-        this.lastUpdated,
-        this.tempC,
-        this.tempF,
-        this.isDay,
-        this.condition,
-        this.windMph,
-        this.windKph,
-        this.windDegree,
-        this.windDir,
-        this.pressureMb,
-        this.pressureIn,
-        this.precipMm,
-        this.precipIn,
-        this.humidity,
-        this.cloud,
-        this.feelslikeC,
-        this.feelslikeF,
-        this.visKm,
-        this.visMiles,
-        this.uv,
-        this.gustMph,
-        this.gustKph});
+      this.lastUpdated,
+      this.tempC,
+      this.tempF,
+      this.isDay,
+      this.condition,
+      this.windMph,
+      this.windKph,
+      this.windDegree,
+      this.windDir,
+      this.pressureMb,
+      this.pressureIn,
+      this.precipMm,
+      this.precipIn,
+      this.humidity,
+      this.cloud,
+      this.feelslikeC,
+      this.feelslikeF,
+      this.visKm,
+      this.visMiles,
+      this.uv,
+      this.gustMph,
+      this.gustKph});
 
   Current.fromJson(Map<String, dynamic> json) {
     lastUpdatedEpoch = json['last_updated_epoch'];

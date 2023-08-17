@@ -1,9 +1,15 @@
+import 'package:adventure_nepal/app/modules/home/model/activities_response.dart';
 import 'package:get/get.dart';
 
+import '../modules/activity_detail/bindings/activity_detail_binding.dart';
+import '../modules/activity_detail/views/activity_detail_view.dart';
 import '../modules/dashboard/bindings/dashboard_binding.dart';
 import '../modules/dashboard/views/dashboard_view.dart';
 import '../modules/home/bindings/home_binding.dart';
+import '../modules/home/model/place_response.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/place_detail/bindings/place_detail_binding.dart';
+import '../modules/place_detail/views/place_detail_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/search/bindings/search_binding.dart';
@@ -57,6 +63,16 @@ class AppPages {
       name: _Paths.PROFILE,
       page: () => const ProfileView(),
       binding: ProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.PLACE_DETAIL,
+      page: () => PlaceDetailView(Place()),
+      binding: PlaceDetailBinding(),
+    ),
+    GetPage(
+      name: _Paths.ACTIVITY_DETAIL,
+      page: () => ActivityDetailView(Activity()),
+      binding: ActivityDetailBinding(),
     ),
   ];
 }

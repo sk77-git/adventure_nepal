@@ -10,6 +10,8 @@ abstract class Routes {
   static const STATS = _Paths.STATS;
   static const SEARCH = _Paths.SEARCH;
   static const PROFILE = _Paths.PROFILE;
+  static const PLACE_DETAIL = _Paths.PLACE_DETAIL;
+  static const ACTIVITY_DETAIL = _Paths.ACTIVITY_DETAIL;
 }
 
 abstract class _Paths {
@@ -21,4 +23,6 @@ abstract class _Paths {
   static const STATS = '/stats';
   static const SEARCH = '/search';
   static const PROFILE = '/profile';
+  static const PLACE_DETAIL = '/place-detail';
+  static const ACTIVITY_DETAIL = '/activity-detail';
 }

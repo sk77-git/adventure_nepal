@@ -11,6 +11,7 @@ class AppImages {
   static const String mountain = "assets/images/mountain.jpeg";
   static const String saaga = "assets/places/saaga.jpg";
   static const String placeholder = "assets/images/mountain.jpeg";
+  static const String loading = "assets/images/loading.png";
 
   static const String balooning = "assets/places/balooning.png";
   static const String hiking = "assets/places/hiking.png";
@@ -19,7 +20,7 @@ class AppImages {
   static const String camping = "assets/places/camping.png";
   static const String sunnyDay = "assets/images/cloudy-day.png";
 
-  List<String> images= [
+  List<String> images = [
     AppImages.chandragiri,
     AppImages.dhulikhel,
     AppImages.nagarkot,

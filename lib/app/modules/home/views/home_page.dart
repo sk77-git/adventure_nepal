@@ -1,36 +1,63 @@
+import 'package:adventure_nepal/app/api/api_client.dart';
+import 'package:adventure_nepal/app/modules/activity_detail/views/activity_detail_view.dart';
+import 'package:adventure_nepal/app/modules/home/model/activities_response.dart';
+import 'package:adventure_nepal/app/modules/home/model/place_response.dart';
+import 'package:adventure_nepal/app/modules/place_detail/views/place_detail_view.dart';
+import 'package:adventure_nepal/app/modules/profile/views/profile_view.dart';
 import 'package:adventure_nepal/app/theme/app_images.dart';
+import 'package:adventure_nepal/app/widgets/activity_card.dart';
+import 'package:adventure_nepal/app/widgets/place_card.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_dimens.dart';
 import '../../../theme/app_styles.dart';
 import '../../../widgets/app_text.dart';
+import '../controllers/home_controller.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final controller = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appbar(),
       body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 16,),
+            const SizedBox(
+              height: 16,
+            ),
             weatherCard(context),
-            const SizedBox(height: 16,),
+            const SizedBox(
+              height: 16,
+            ),
             recommendedPlaces(),
-            const SizedBox(height: 16,),
-            recommendedActivities()
+            const SizedBox(
+              height: 16,
+            ),
+            recommendedActivities(),
+            const SizedBox(
+              height: 40,
+            )
           ],
         ),
       ),
     );
   }
 
-  AppBar appbar(){
+  AppBar appbar() {
     return AppBar(
       toolbarHeight: 70,
       title: Column(
@@ -54,14 +81,14 @@ class HomePage extends StatelessWidget {
       actions: [
         IconButton(
           onPressed: () {
+            Get.to(() => ProfileView());
           },
           icon: Container(
             height: 50.0,
             decoration: BoxDecoration(
               color: Colors.indigo.shade300.withOpacity(0.1),
               image: const DecorationImage(
-                  image: AssetImage(AppImages.mountain),
-                  fit: BoxFit.cover),
+                  image: AssetImage(AppImages.mountain), fit: BoxFit.cover),
               borderRadius: BorderRadius.circular(5),
             ),
           ),
@@ -71,106 +98,210 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget weatherCard(BuildContext context){
-    return  Container(
+  Widget weatherCard(BuildContext context) {
+    return Container(
       width: double.maxFinite,
-        padding: const EdgeInsets.all(20),
-    decoration: BoxDecoration(
-    color: AppColors.mainColor.withOpacity(0.1),
-    borderRadius: const BorderRadius.all(Radius.circular(10))
-    ), child: Column(
-      children: [
-        Row(
-          children: [
-            AppText(text: "Partly Cloudy", style: AppStyles.headingStyle.copyWith(color: AppColors.mainColor),),
-            const Spacer(),
-            AppText(text: "2022-08-01 10.02 AM", style: AppStyles.subtitleStyle.copyWith(color: AppColors.grey),)
-          ],
-        ),
-        const SizedBox(height: 16,),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            AppText(text: "15.0", style: AppStyles.headingStyle.copyWith(color: AppColors.mainColor, fontSize: 50),),
-            AppText(text: "°C", style: AppStyles.headingStyle.copyWith(color: AppColors.secondary, fontSize: 30)),
-            const Spacer(),
-            SizedBox(
-                width: 50,
-                child: Image.asset(AppImages.sunnyDay)),
-          ],
-        ),
-        const SizedBox(height: 16,),
-        Row(
-          children: [
-            const Icon(Icons.location_on, color: AppColors.secondary,size: 16,),
-            const SizedBox(width: 5,),
-            AppText(text: "Kathmandu", style: AppStyles.titleStyle.copyWith(color: AppColors.mainColor,))
-          ],
-        )
-      ],
-    ),);
-  }
-
-  Widget recommendedPlaces(){
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        AppText(text: "Recommended Places", style: AppStyles.headingStyle),
-        const SizedBox(height: 16,),
-        SizedBox(
-          height: 200,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-              itemCount: 5,
-              itemBuilder: (ctx, context){
-            return  Container(
-              margin: const EdgeInsets.only(right: 16),
-              width: 150,
-              decoration: BoxDecoration(
-                color: Colors.indigo.shade300.withOpacity(0.1),
-                image: const DecorationImage(
-                    image: AssetImage(AppImages.mountain),
-                    fit: BoxFit.cover),
-                borderRadius: BorderRadius.circular(5),
-              ),
-            );
-          }),
-        )
-
-      ],
-    );
-
-  }
-  Widget recommendedActivities(){
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        AppText(text: "Recommended Activities", style: AppStyles.headingStyle),
-        const SizedBox(height: 16,),
-        SizedBox(
-          height: 70,
-          child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: 5,
-              itemBuilder: (ctx, context){
-                return  Container(
-                  margin: const EdgeInsets.only(right: 16),
-                  width: 70,
-                  decoration: BoxDecoration(
-                    color: Colors.indigo.shade300.withOpacity(0.1),
-                    image: const DecorationImage(
-                        image: AssetImage(AppImages.balooning),
-                        fit: BoxFit.cover),
-                    borderRadius: BorderRadius.circular(5),
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+          color: AppColors.mainColor.withOpacity(0.1),
+          borderRadius: const BorderRadius.all(Radius.circular(10))),
+      child: Obx(() {
+        var response = controller.weatherResponse.value;
+        switch (response.status) {
+          case ApiStatus.LOADING:
+            {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          case ApiStatus.SUCCESS:
+            {
+              return Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          response.response?.current?.condition?.text ?? "....",
+                          style: AppStyles.headingStyle
+                              .copyWith(color: AppColors.mainColor),
+                        ),
+                      ),
+                      const Spacer(),
+                      Expanded(
+                        child: Text(
+                          response.response?.current?.lastUpdated ??
+                              "Updated at: ...",
+                          style: AppStyles.subtitleStyle
+                              .copyWith(color: AppColors.grey),
+                        ),
+                      )
+                    ],
                   ),
-                );
-              }),
-        )
-
-      ],
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      AppText(
+                        text: (response.response?.current?.feelslikeC ?? 0)
+                            .toString(),
+                        style: AppStyles.headingStyle
+                            .copyWith(color: AppColors.mainColor, fontSize: 50),
+                      ),
+                      AppText(
+                          text: "°C",
+                          style: AppStyles.headingStyle.copyWith(
+                              color: AppColors.secondary, fontSize: 30)),
+                      const Spacer(),
+                      SizedBox(
+                          width: 70,
+                          child: Image.network(
+                            "https:${response.response?.current?.condition?.icon}",
+                            fit: BoxFit.fitHeight,
+                            errorBuilder: (BuildContext context, Object o,
+                                StackTrace? s) {
+                              return Container();
+                            },
+                          )),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.location_on,
+                        color: AppColors.secondary,
+                        size: 16,
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      AppText(
+                          text: response.response?.location?.name ?? "Location",
+                          style: AppStyles.titleStyle.copyWith(
+                            color: AppColors.mainColor,
+                          ))
+                    ],
+                  )
+                ],
+              );
+            }
+          default:
+            {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+        }
+      }),
     );
+  }
 
+  Widget recommendedPlaces() {
+    return Obx(() {
+      var response = controller.placesResponse.value;
+      switch (response.status) {
+        case ApiStatus.LOADING:
+          {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        case ApiStatus.SUCCESS:
+          {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                AppText(
+                    text: "Recommended Places", style: AppStyles.headingStyle),
+                const SizedBox(
+                  height: 16,
+                ),
+                SizedBox(
+                  height: 230,
+                  child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: response.response?.places?.length ?? 0,
+                      itemBuilder: (ctx, index) {
+                        Place? place = response.response?.places![index];
+                        return GestureDetector(
+                          onTap: () {
+                            Get.to(() => PlaceDetailView(place));
+                          },
+                          child: PlaceCard(
+                              title: place?.name ?? "N/A",
+                              imageUrl: place?.thumbnail ?? ""),
+                        );
+                      }),
+                )
+              ],
+            );
+          }
+        default:
+          {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+      }
+    });
+  }
+
+  Widget recommendedActivities() {
+    return Obx(() {
+      var response = controller.activitiesResponse.value;
+      switch (response.status) {
+        case ApiStatus.LOADING:
+          {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        case ApiStatus.SUCCESS:
+          {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                AppText(
+                    text: "Recommended Activities",
+                    style: AppStyles.headingStyle),
+                const SizedBox(
+                  height: 16,
+                ),
+                SizedBox(
+                  height: 120,
+                  child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: response.response?.activities?.length ?? 0,
+                      itemBuilder: (ctx, index) {
+                        Activity? activity =
+                            response.response?.activities![index];
+                        return GestureDetector(
+                          onTap: () {
+                            Get.to(() => ActivityDetailView(activity));
+                          },
+                          child: ActivityCard(
+                              title: activity?.title ?? "N/A",
+                              imageUrl: activity?.icon ?? ""),
+                        );
+                      }),
+                )
+              ],
+            );
+          }
+        default:
+          {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+      }
+    });
   }
 }
