@@ -7,6 +7,13 @@ import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import 'app/routes/app_pages.dart';
+/*
+* 1. Add list of places with lat, long, tags
+* 2. Fetch places based on user lat long and tags [preferences eg- historic, river, water, pond, temple, hindu etc]
+* 3. Add list of activities that can be done in certain weather and place
+*  
+*
+* */
 
 void main() {
   runApp(

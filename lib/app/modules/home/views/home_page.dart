@@ -26,32 +26,39 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final controller = Get.put(HomeController());
 
+  Future<void> refresh() async {
+    controller.onInit();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appbar(),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: 16,
-            ),
-            weatherCard(context),
-            const SizedBox(
-              height: 16,
-            ),
-            recommendedPlaces(),
-            const SizedBox(
-              height: 16,
-            ),
-            recommendedActivities(),
-            const SizedBox(
-              height: 40,
-            )
-          ],
+      body: RefreshIndicator(
+        onRefresh: refresh,
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 16,
+              ),
+              weatherCard(context),
+              const SizedBox(
+                height: 16,
+              ),
+              recommendedPlaces(),
+              const SizedBox(
+                height: 16,
+              ),
+              recommendedActivities(),
+              const SizedBox(
+                height: 40,
+              )
+            ],
+          ),
         ),
       ),
     );

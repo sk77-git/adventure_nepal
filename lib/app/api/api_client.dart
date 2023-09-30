@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:get/get.dart';
 import '../theme/app_strings.dart';
 import 'api_urls.dart';
 import 'http_client.dart';
@@ -17,15 +16,14 @@ class ApiClient {
     var header = {
       "Accept": "application/json",
     };
-    final response = await MyHttpClient.client
-        .get(Uri.parse(url), headers: header);
+    final response =
+        await MyHttpClient.client.get(Uri.parse(url), headers: header);
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body);
       final data = fromJson != null ? fromJson(json) : json as T;
       return ApiResponse.completed(data);
     } else {
-      final message =
-      ApiMessage.getMessage(response.statusCode, response.body);
+      final message = ApiMessage.getMessage(response.statusCode, response.body);
       log("Api Client:$url:$message");
       return ApiResponse.error(message);
     }
@@ -117,11 +115,14 @@ class ApiMessage {
     switch (statusCode) {
       case 400:
         return 'Bad Request';
-      case 401: return AppStrings.unAuthorised;
+      case 401:
+        return AppStrings.unAuthorised;
       case 403:
         return AppStrings.forbidden;
-      case 404:return AppStrings.notFound;
-      case 417: return AppStrings.expectationFailed;
+      case 404:
+        return AppStrings.notFound;
+      case 417:
+        return AppStrings.expectationFailed;
       case 500:
         return AppStrings.badRequest;
       case 502:
