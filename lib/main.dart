@@ -4,6 +4,7 @@ import 'package:adventure_nepal/app/theme/app_strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import 'app/routes/app_pages.dart';
@@ -15,7 +16,9 @@ import 'app/routes/app_pages.dart';
 *
 * */
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await GetStorage.init();
   runApp(
     const Application(),
   );

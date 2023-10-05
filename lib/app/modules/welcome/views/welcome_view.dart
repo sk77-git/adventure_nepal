@@ -1,6 +1,7 @@
-import 'package:adventure_nepal/app/modules/dashboard/views/dashboard_view.dart';
 import 'package:adventure_nepal/app/modules/home/views/home_page.dart';
+import 'package:adventure_nepal/app/modules/login/views/login_view.dart';
 import 'package:adventure_nepal/app/theme/app_dimens.dart';
+import 'package:adventure_nepal/app/utils/storage_util.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -80,7 +81,12 @@ class WelcomeView extends GetView<WelcomeController> {
                         AppButton(
                           onTap: () {
                             // Get.offAll(() => DashboardView());
-                            Get.offAll(() => HomePage());
+                            // Get.offAll(() => HomePage());
+                            if (StorageUtil.read("isLoggedIn", false)) {
+                              Get.offAll(() => const HomePage());
+                            } else {
+                              Get.offAll(() => const LoginView());
+                            }
                           },
                           text: "  Let's Go  ",
                         )
