@@ -21,7 +21,11 @@ class ApiClient {
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body);
       final data = fromJson != null ? fromJson(json) : json as T;
-      return ApiResponse.completed(data);
+      if (json["status"] == "success") {
+        return ApiResponse.completed(data);
+      } else {
+        return ApiResponse.error(json["message"] ?? "Something went wrong");
+      }
     } else {
       final message = ApiMessage.getMessage(response.statusCode, response.body);
       log("Api Client:$url:$message");
@@ -66,7 +70,11 @@ class ApiClient {
       if (response.statusCode == 200) {
         final json = jsonDecode(response.body);
         final data = responseType != null ? responseType(json) : json as T;
-        return ApiResponse.completed(data);
+        if (json["status"] == "success") {
+          return ApiResponse.completed(data);
+        } else {
+          return ApiResponse.error(json["message"] ?? "Something went wrong");
+        }
       } else {
         final message =
             ApiMessage.getMessage(response.statusCode, response.body);
