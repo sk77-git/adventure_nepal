@@ -24,4 +24,15 @@ class AuthRepo {
     );
     return response;
   }
+
+  static Future<ApiResponse<BasicApiResponse>> forgotPassword(
+      dynamic forgotPasswordRequest) async {
+    final response = await ApiClient.postApi<BasicApiResponse>(
+      ApiUrls.forgotPassword,
+      isTokenRequired: false,
+      requestBody: forgotPasswordRequest,
+      responseType: (json) => BasicApiResponse.fromJson(json),
+    );
+    return response;
+  }
 }

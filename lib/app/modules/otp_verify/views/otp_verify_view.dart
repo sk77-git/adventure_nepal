@@ -1,4 +1,5 @@
 import 'package:adventure_nepal/app/api/api_client.dart';
+import 'package:adventure_nepal/app/modules/change_password/views/change_password_view.dart';
 import 'package:adventure_nepal/app/modules/login/views/login_view.dart';
 import 'package:adventure_nepal/app/modules/otp_verify/controllers/otp_verify_controller.dart';
 import 'package:adventure_nepal/app/theme/app_images.dart';
@@ -12,8 +13,10 @@ import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
 
 class OtpVerifyView extends StatefulWidget {
-  const OtpVerifyView({Key? key, required this.email}) : super(key: key);
+  const OtpVerifyView({Key? key, required this.email, required this.purpose})
+      : super(key: key);
   final String email;
+  final String purpose;
 
   @override
   State<OtpVerifyView> createState() => _OtpVerifyViewState();
@@ -28,9 +31,7 @@ class _OtpVerifyViewState extends State<OtpVerifyView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 0,
-      ),
+      appBar: AppBar(),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
         child: Form(
@@ -101,17 +102,21 @@ class _OtpVerifyViewState extends State<OtpVerifyView> {
               text: "Continue",
               onTap: () {
                 controller
-                    .verifyOtp(widget.email, enteredCode ?? "")
+                    .verifyOtp(widget.email, enteredCode ?? "", widget.purpose)
                     .then((value) {
                   if (value.status == ApiStatus.SUCCESS) {
+                    if (widget.purpose == "forgot-password") {
+                      Get.off(() => ChangePasswordView(email: widget.email));
+                      return;
+                    }
                     Get.offAll(() => const LoginView());
                     SnackBarUtil.showSnackBar(
                         message:
                             "OTP Verification successful.Please login to continue");
                   } else {
                     SnackBarUtil.showSnackBar(
-                        message:
-                            value.response?.message ?? "Something went wrong");
+                        message: controller.verifyOtpResponse.value.message ??
+                            "Something went wrong");
                   }
                 });
               });

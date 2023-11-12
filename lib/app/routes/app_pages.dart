@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import '../modules/activity_detail/bindings/activity_detail_binding.dart';
 import '../modules/activity_detail/views/activity_detail_view.dart';
+import '../modules/change_password/bindings/change_password_binding.dart';
+import '../modules/change_password/views/change_password_view.dart';
 import '../modules/dashboard/bindings/dashboard_binding.dart';
 import '../modules/dashboard/views/dashboard_view.dart';
 import '../modules/forgot_password/bindings/forgot_password_binding.dart';
@@ -101,8 +103,16 @@ class AppPages {
       name: _Paths.OTP_VERIFY,
       page: () => const OtpVerifyView(
         email: "",
+        purpose: "",
       ),
       binding: OtpVerifyBinding(),
+    ),
+    GetPage(
+      name: _Paths.CHANGE_PASSWORD,
+      page: () => const ChangePasswordView(
+        email: "",
+      ),
+      binding: ChangePasswordBinding(),
     ),
   ];
 }

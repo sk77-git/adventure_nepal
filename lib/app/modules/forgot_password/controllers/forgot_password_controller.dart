@@ -1,23 +1,21 @@
+import 'package:adventure_nepal/app/api/api_client.dart';
+import 'package:adventure_nepal/app/repository/auth_repo.dart';
 import 'package:get/get.dart';
 
-class ForgotPasswordController extends GetxController {
-  //TODO: Implement ForgotPasswordController
+import '../../../data/basic_api_response.dart';
 
-  final count = 0.obs;
+class ForgotPasswordController extends GetxController {
+  var forgotPasswordResponse = ApiResponse<BasicApiResponse>.initial().obs;
+
   @override
   void onInit() {
     super.onInit();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  Future<ApiResponse<BasicApiResponse>> forgotPassword(String email) async {
+    forgotPasswordResponse.value = ApiResponse<BasicApiResponse>.loading();
+    var body = {"email": email};
+    forgotPasswordResponse.value = await AuthRepo.forgotPassword(body);
+    return forgotPasswordResponse.value;
   }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

@@ -13,8 +13,8 @@ class AppColors {
 
   //Appbar theme
   static Color appBarColor = Colors.grey.shade50;
-  static const Color appBarTextColor = Colors.black54;
-  static const Color appBarIconColor = Colors.black54;
+  static const Color appBarTextColor = Colors.black;
+  static const Color appBarIconColor = Colors.black;
   static const whiteGrey = Colors.white54;
   static const Color hintColor = Color(0xFF6C6C6C); //hint
 

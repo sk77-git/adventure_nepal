@@ -23,9 +23,9 @@ class OtpVerifyController extends GetxController {
   }
 
   Future<ApiResponse<BasicApiResponse>> verifyOtp(
-      String email, String otp) async {
+      String email, String otp, String purpose) async {
     verifyOtpResponse.value = ApiResponse<BasicApiResponse>.loading();
-    var body = {"email": email, "otp": otp, "purpose": "signup"};
+    var body = {"email": email, "otp": otp, "purpose": purpose};
     verifyOtpResponse.value = await AuthRepo.verifyOtp(body);
     return verifyOtpResponse.value;
   }
