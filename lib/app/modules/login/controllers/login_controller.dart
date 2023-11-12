@@ -1,4 +1,3 @@
-import 'package:adventure_nepal/app/modules/login/model/login_request.dart';
 import 'package:get/get.dart';
 
 import '../../../api/api_client.dart';
@@ -24,13 +23,9 @@ class LoginController extends GetxController {
   }
 
   Future<ApiResponse<LoginResponse>> doLogin(
-      String userName, String password) async {
+      String email, String password) async {
     loginResponse.value = ApiResponse<LoginResponse>.loading();
-    LoginRequest loginRequest = LoginRequest(userName, password);
-    var body = {
-      "email": "shrawankumarthakur77@gmail.com",
-      "password": "12345678"
-    };
+    var body = {"email": email, "password": password};
     loginResponse.value = await AuthRepo.login(body);
     return loginResponse.value;
   }

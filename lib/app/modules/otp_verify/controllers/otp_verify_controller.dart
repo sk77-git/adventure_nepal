@@ -1,9 +1,12 @@
+import 'package:adventure_nepal/app/api/api_client.dart';
 import 'package:get/get.dart';
 
-class OtpVerifyController extends GetxController {
-  //TODO: Implement OtpVerifyController
+import '../../../data/basic_api_response.dart';
+import '../../../repository/auth_repo.dart';
 
-  final count = 0.obs;
+class OtpVerifyController extends GetxController {
+  var verifyOtpResponse = ApiResponse<BasicApiResponse>.initial().obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -19,5 +22,11 @@ class OtpVerifyController extends GetxController {
     super.onClose();
   }
 
-  void increment() => count.value++;
+  Future<ApiResponse<BasicApiResponse>> verifyOtp(
+      String email, String otp) async {
+    verifyOtpResponse.value = ApiResponse<BasicApiResponse>.loading();
+    var body = {"email": email, "otp": otp, "purpose": "signup"};
+    verifyOtpResponse.value = await AuthRepo.verifyOtp(body);
+    return verifyOtpResponse.value;
+  }
 }

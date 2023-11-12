@@ -99,7 +99,9 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.OTP_VERIFY,
-      page: () => OtpVerifyView(),
+      page: () => const OtpVerifyView(
+        email: "",
+      ),
       binding: OtpVerifyBinding(),
     ),
   ];

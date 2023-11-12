@@ -5,4 +5,5 @@ class ApiUrls {
   static const String getAllPlaces = "/get_all_places.php";
   static const String getAllActivities = "/get_all_activities.php";
   static const String login = "/signin.php";
+  static const String verifyOtp = "/verify_otp.php";
 }

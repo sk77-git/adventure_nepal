@@ -27,7 +27,7 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   final controller = Get.put(LoginController());
 
-  String? userName = "shrawankumarthakur77@gmail.com";
+  String? email = "shrawankumarthakur77@gmail.com";
   String? password = "12345678";
   var formKey = GlobalKey<FormState>();
   bool passwordVisible = false;
@@ -63,10 +63,10 @@ class _LoginViewState extends State<LoginView> {
                 InputField(
                   title: "Email",
                   textInputType: TextInputType.emailAddress,
-                  initialValue: userName,
+                  initialValue: email,
                   hint: "abc@abc.com",
                   onChangedCallback: (newValue) {
-                    userName = newValue;
+                    email = newValue;
                   },
                   validator: (string) =>
                       Validator.validateEmail(string: string),
@@ -145,13 +145,15 @@ class _LoginViewState extends State<LoginView> {
           if (isValid) {
             //To hide keyboard
             FocusManager.instance.primaryFocus?.unfocus();
-            controller.doLogin(userName ?? "", password ?? "").then((value) {
+            controller.doLogin(email ?? "", password ?? "").then((value) {
               if (value.status == ApiStatus.SUCCESS) {
                 if (value.response?.isVerified == true) {
                   Get.offAll(() => const HomePage());
                   StorageUtil.setIsLoggedIn(true);
                 } else {
-                  Get.to(() => const OtpVerifyView());
+                  Get.to(() => OtpVerifyView(
+                        email: email ?? "",
+                      ));
                 }
               } else {
                 StorageUtil.clear();
