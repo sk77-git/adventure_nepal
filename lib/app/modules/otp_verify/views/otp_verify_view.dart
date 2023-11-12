@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:adventure_nepal/app/theme/app_colors.dart';
 import 'package:adventure_nepal/app/theme/app_images.dart';
 import 'package:adventure_nepal/app/theme/app_styles.dart';
 import 'package:adventure_nepal/app/widgets/app_button.dart';
@@ -23,7 +22,6 @@ class _OtpVerifyViewState extends State<OtpVerifyView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundColorWhite,
       appBar: AppBar(
         toolbarHeight: 0,
       ),
