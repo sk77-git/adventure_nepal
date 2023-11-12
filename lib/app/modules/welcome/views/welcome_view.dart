@@ -80,9 +80,7 @@ class WelcomeView extends GetView<WelcomeController> {
                         ),
                         AppButton(
                           onTap: () {
-                            // Get.offAll(() => DashboardView());
-                            // Get.offAll(() => HomePage());
-                            if (StorageUtil.read("isLoggedIn", false)) {
+                            if (StorageUtil.isLoggedIn()) {
                               Get.offAll(() => const HomePage());
                             } else {
                               Get.offAll(() => const LoginView());

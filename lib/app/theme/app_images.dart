@@ -12,6 +12,7 @@ class AppImages {
   static const String saaga = "assets/places/saaga.jpg";
   static const String placeholder = "assets/images/mountain.jpeg";
   static const String loading = "assets/images/loading.png";
+  static const String launcherIcon = "assets/images/launcher_icon.png";
 
   static const String balooning = "assets/places/balooning.png";
   static const String hiking = "assets/places/hiking.png";

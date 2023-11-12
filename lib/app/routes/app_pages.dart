@@ -12,6 +12,8 @@ import '../modules/home/model/place_response.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
+import '../modules/otp_verify/bindings/otp_verify_binding.dart';
+import '../modules/otp_verify/views/otp_verify_view.dart';
 import '../modules/place_detail/bindings/place_detail_binding.dart';
 import '../modules/place_detail/views/place_detail_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
@@ -32,7 +34,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
 
-  static const INITIAL = Routes.WELCOME;
+  static const INITIAL = Routes.SPLASH;
 
   static final routes = [
     GetPage(
@@ -94,6 +96,11 @@ class AppPages {
       name: _Paths.FORGOT_PASSWORD,
       page: () => const ForgotPasswordView(),
       binding: ForgotPasswordBinding(),
+    ),
+    GetPage(
+      name: _Paths.OTP_VERIFY,
+      page: () => OtpVerifyView(),
+      binding: OtpVerifyBinding(),
     ),
   ];
 }

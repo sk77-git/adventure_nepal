@@ -1,4 +1,6 @@
-
+import 'package:adventure_nepal/app/modules/login/views/login_view.dart';
+import 'package:adventure_nepal/app/utils/storage_util.dart';
+import 'package:adventure_nepal/app/widgets/app_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -28,12 +30,13 @@ class ProfileView extends GetView<ProfileController> {
           ],
         ),
       ),
-      body: const Center(
-        child: Text(
-          'ProfileView is working',
-          style: TextStyle(fontSize: 20),
-        ),
-      ),
+      body: Center(
+          child: AppButton(
+              text: "Logout",
+              onTap: () {
+                StorageUtil.setIsLoggedIn(false);
+                Get.offAll(() => const LoginView());
+              })),
     );
   }
 }

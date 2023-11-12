@@ -20,6 +20,7 @@ dependencies:
   geolocator: ^9.0.2
   http_interceptor: ^1.0.2
   get_storage: ^2.1.1
+  otp_text_field: ^1.1.3
 
 
 dev_dependencies:
@@ -32,4 +33,5 @@ flutter:
   assets:
     - assets/images/
     - assets/places/
+    - assets/images/launcher_icon.png
 

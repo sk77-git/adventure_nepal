@@ -23,7 +23,8 @@ class LoginController extends GetxController {
     super.onClose();
   }
 
-  Future<void> doLogin(String userName, String password) async {
+  Future<ApiResponse<LoginResponse>> doLogin(
+      String userName, String password) async {
     loginResponse.value = ApiResponse<LoginResponse>.loading();
     LoginRequest loginRequest = LoginRequest(userName, password);
     var body = {
@@ -31,5 +32,6 @@ class LoginController extends GetxController {
       "password": "12345678"
     };
     loginResponse.value = await AuthRepo.login(body);
+    return loginResponse.value;
   }
 }

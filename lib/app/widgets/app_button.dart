@@ -40,6 +40,7 @@ class AppButton extends StatelessWidget {
                         child: Text(
                           text,
                           softWrap: false,
+                          textAlign: TextAlign.center,
                           style: TextStyle(
                               color: textColor,
                               overflow: TextOverflow.ellipsis),
@@ -48,6 +49,7 @@ class AppButton extends StatelessWidget {
                     : Text(
                         text,
                         softWrap: false,
+                        textAlign: TextAlign.center,
                         style: TextStyle(
                             color: textColor, overflow: TextOverflow.ellipsis),
                       ),

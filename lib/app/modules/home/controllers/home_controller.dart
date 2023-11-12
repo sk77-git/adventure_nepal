@@ -49,7 +49,7 @@ class HomeController extends GetxController {
     log("getWeather:$data");
     if (data != null) {
       weatherResponse.clear();
-      weatherResponse.add( WeatherResponse.fromJson(data));
+      weatherResponse.add(WeatherResponse.fromJson(data));
     }
     isLoading.value = false;
   }*/
@@ -57,7 +57,7 @@ class HomeController extends GetxController {
   Future<void> _getCurrentPosition() async {
     final hasPermission = await _handleLocationPermission();
     if (!hasPermission) {
-      /*If problem in permission show weather of Kathmandu temporarily*/
+      /*If problem in permission show weather of Kathmandu initially*/
       getWeather("Kathmandu");
       return;
     }

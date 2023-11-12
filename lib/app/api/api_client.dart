@@ -21,7 +21,7 @@ class ApiClient {
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body);
       final data = fromJson != null ? fromJson(json) : json as T;
-      if (json["status"] == "success") {
+      if (json["status"] == "success" || url.contains("api.weatherapi.com")) {
         return ApiResponse.completed(data);
       } else {
         return ApiResponse.error(json["message"] ?? "Something went wrong");

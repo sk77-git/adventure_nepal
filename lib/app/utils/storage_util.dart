@@ -2,6 +2,7 @@ import 'package:get_storage/get_storage.dart';
 
 class StorageUtil {
   static final _box = GetStorage();
+  static const String _isLoggedIn = "isLoggedIn";
 
 
   static void write(String key, dynamic value) {
@@ -28,6 +29,14 @@ class StorageUtil {
 
   static void clear() {
     _box.erase();
+  }
+
+  static bool isLoggedIn() {
+    return read(_isLoggedIn, false);
+  }
+
+  static void setIsLoggedIn(bool value) {
+    return write(_isLoggedIn, value);
   }
 
 
