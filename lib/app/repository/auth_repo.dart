@@ -35,4 +35,15 @@ class AuthRepo {
     );
     return response;
   }
+
+  static Future<ApiResponse<BasicApiResponse>> changePassword(
+      dynamic changePasswordRequest) async {
+    final response = await ApiClient.postApi<BasicApiResponse>(
+      ApiUrls.changePassword,
+      isTokenRequired: false,
+      requestBody: changePasswordRequest,
+      responseType: (json) => BasicApiResponse.fromJson(json),
+    );
+    return response;
+  }
 }

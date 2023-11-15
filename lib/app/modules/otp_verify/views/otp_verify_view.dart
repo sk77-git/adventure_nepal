@@ -32,58 +32,53 @@ class _OtpVerifyViewState extends State<OtpVerifyView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
-        child: Form(
-          key: formKey,
-          child: Column(
-            children: [
-              SizedBox(
-                height: MediaQuery.of(context).size.height / 5,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    AppImages.launcherIcon,
-                    width: 150,
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 36,
-              ),
-              Text("Enter 6 Digits Code", style: AppStyles.headingStyle),
-              const SizedBox(
-                height: 20,
-              ),
-              Text("Enter your 6 digits code that you received on your email.",
-                  style: AppStyles.hintStyle),
-              const SizedBox(
-                height: 15,
-              ),
-              Center(
-                child: OTPTextField(
-                    controller: otpController,
-                    length: 6,
-                    width: MediaQuery.of(context).size.width,
-                    textFieldAlignment: MainAxisAlignment.spaceAround,
-                    fieldWidth: 45,
-                    fieldStyle: FieldStyle.underline,
-                    // style: AppStyles.textStyle,
-                    onChanged: (pin) {
-                      enteredCode = pin;
-                    },
-                    onCompleted: (pin) {}),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              continueButton(),
-              const SizedBox(
-                height: 23,
-              ),
-            ],
+      body: Center(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 16),
+          child: Form(
+            key: formKey,
+            child: Column(
+              children: [
+                Image.asset(
+                  AppImages.launcherIcon,
+                  width: 150,
+                ),
+                const SizedBox(
+                  height: 36,
+                ),
+                Text("Enter 6 Digits Code", style: AppStyles.headingStyle),
+                const SizedBox(
+                  height: 20,
+                ),
+                Text(
+                    "Enter your 6 digits code that you received on your email.",
+                    style: AppStyles.hintStyle),
+                const SizedBox(
+                  height: 15,
+                ),
+                Center(
+                  child: OTPTextField(
+                      controller: otpController,
+                      length: 6,
+                      width: MediaQuery.of(context).size.width,
+                      textFieldAlignment: MainAxisAlignment.spaceAround,
+                      fieldWidth: 45,
+                      fieldStyle: FieldStyle.underline,
+                      // style: AppStyles.textStyle,
+                      onChanged: (pin) {
+                        enteredCode = pin;
+                      },
+                      onCompleted: (pin) {}),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                continueButton(),
+                const SizedBox(
+                  height: 23,
+                ),
+              ],
+            ),
           ),
         ),
       ),

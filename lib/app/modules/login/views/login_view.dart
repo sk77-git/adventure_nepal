@@ -15,6 +15,7 @@ import '../../../widgets/input_field.dart';
 import '../../../widgets/loading_widget.dart';
 import '../../../widgets/password_field.dart';
 import '../../forgot_password/views/forgot_password_view.dart';
+import '../../signup/views/signup_view.dart';
 import '../controllers/login_controller.dart';
 
 class LoginView extends StatefulWidget {
@@ -108,14 +109,25 @@ class _LoginViewState extends State<LoginView> {
                       },
                       child: Text("Forgot Password?",
                           style: AppStyles.labelStyle
-                              .copyWith(color: AppColors.brandSecondaryAlt2)),
+                              .copyWith(color: AppColors.brandSecondaryAlt3)),
                     ),
                   ],
                 ),
                 const SizedBox(
                   height: 15,
                 ),
-                loginObserver()
+                loginObserver(),
+                TextButton(
+                  onPressed: () {
+                    Get.to(() => const SignupView());
+                  },
+                  child: Text("New here? Create a account",
+                      style: AppStyles.labelStyle.copyWith(
+                        color: AppColors.brandSecondaryAlt3,
+                        height: 0.5,
+                        decoration: TextDecoration.underline,
+                      )),
+                ),
               ],
             ),
           ),

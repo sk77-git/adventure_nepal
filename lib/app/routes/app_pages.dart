@@ -22,6 +22,8 @@ import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/search/bindings/search_binding.dart';
 import '../modules/search/views/search_view.dart';
+import '../modules/select_interests/bindings/select_interests_binding.dart';
+import '../modules/select_interests/views/select_interests_view.dart';
 import '../modules/signup/bindings/signup_binding.dart';
 import '../modules/signup/views/signup_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
@@ -113,6 +115,11 @@ class AppPages {
         email: "",
       ),
       binding: ChangePasswordBinding(),
+    ),
+    GetPage(
+      name: _Paths.SELECT_INTERESTS,
+      page: () => const SelectInterestsView(),
+      binding: SelectInterestsBinding(),
     ),
   ];
 }

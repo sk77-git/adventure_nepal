@@ -7,4 +7,6 @@ class ApiUrls {
   static const String login = "/signin.php";
   static const String verifyOtp = "/verify_otp.php";
   static const String forgotPassword = "/forgot_password.php";
+  static const String changePassword = "/change-password.php";
+  static const String storeInterests = "/store-interests.php";
 }

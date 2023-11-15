@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_dimens.dart';
 import '../../../widgets/app_text.dart';
+import '../../select_interests/views/select_interests_view.dart';
 import '../controllers/profile_controller.dart';
 
 class ProfileView extends GetView<ProfileController> {
@@ -31,12 +32,24 @@ class ProfileView extends GetView<ProfileController> {
         ),
       ),
       body: Center(
-          child: AppButton(
+          child: Column(
+        children: [
+          AppButton(
               text: "Logout",
               onTap: () {
                 StorageUtil.setIsLoggedIn(false);
                 Get.offAll(() => const LoginView());
-              })),
+              }),
+          const SizedBox(
+            height: 16,
+          ),
+          AppButton(
+              text: "Interests",
+              onTap: () {
+                Get.to(() => const SelectInterestsView());
+              }),
+        ],
+      )),
     );
   }
 }
