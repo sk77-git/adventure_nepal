@@ -162,6 +162,7 @@ class _LoginViewState extends State<LoginView> {
                 if (value.response?.isVerified == true) {
                   Get.offAll(() => const HomePage());
                   StorageUtil.setIsLoggedIn(true);
+                  StorageUtil.setUserId(9);
                 } else {
                   Get.to(() => OtpVerifyView(
                         email: email ?? "",

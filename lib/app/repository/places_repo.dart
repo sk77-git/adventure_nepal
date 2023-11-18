@@ -5,7 +5,7 @@ import 'package:adventure_nepal/app/modules/home/model/place_response.dart';
 class PlacesRepo {
   static Future<ApiResponse<PlacesResponse>> getPlaces() async {
     final response = await ApiClient.getApi<PlacesResponse>(
-      ApiUrls.baseUrl + ApiUrls.getAllPlaces,
+      ApiUrls.getAllPlaces,
       isTokenRequired: false,
       fromJson: (json) => PlacesResponse.fromJson(json),
     );

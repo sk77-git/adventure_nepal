@@ -6,8 +6,13 @@ import '../theme/app_colors.dart';
 class SelectableButton extends StatefulWidget {
   final String text;
   final ValueChanged<bool> onTap;
+  final bool isSelected;
 
-  const SelectableButton({super.key, required this.text, required this.onTap});
+  const SelectableButton(
+      {super.key,
+      required this.text,
+      required this.onTap,
+      this.isSelected = false});
 
   @override
   _SelectableButtonState createState() => _SelectableButtonState();
@@ -15,6 +20,12 @@ class SelectableButton extends StatefulWidget {
 
 class _SelectableButtonState extends State<SelectableButton> {
   bool _isSelected = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _isSelected = widget.isSelected;
+  }
 
   void _toggleSelected() {
     setState(() {

@@ -9,26 +9,30 @@ import 'http_client.dart';
 ///This class is used to communicate with APIs
 class ApiClient {
   static Future<ApiResponse<T>> getApi<T>(
-    String url, {
+    String endPoint, {
     required bool isTokenRequired,
     T Function(dynamic json)? fromJson,
   }) async {
     var header = {
       "Accept": "application/json",
     };
-    final response =
-        await MyHttpClient.client.get(Uri.parse(url), headers: header);
+    var uri = Uri.parse(ApiUrls.baseUrl + endPoint);
+    if (endPoint.contains("api.weatherapi.com")) {
+      uri = Uri.parse(endPoint);
+    }
+    final response = await MyHttpClient.client.get(uri, headers: header);
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body);
       final data = fromJson != null ? fromJson(json) : json as T;
-      if (json["status"] == "success" || url.contains("api.weatherapi.com")) {
+      if (json["status"] == "success" ||
+          endPoint.contains("api.weatherapi.com")) {
         return ApiResponse.completed(data);
       } else {
         return ApiResponse.error(json["message"] ?? "Something went wrong");
       }
     } else {
       final message = ApiMessage.getMessage(response.statusCode, response.body);
-      log("Api Client:$url:$message");
+      log("Api Client:$endPoint:$message");
       return ApiResponse.error(message);
     }
     /*try {

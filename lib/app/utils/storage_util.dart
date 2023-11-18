@@ -3,7 +3,7 @@ import 'package:get_storage/get_storage.dart';
 class StorageUtil {
   static final _box = GetStorage();
   static const String _isLoggedIn = "isLoggedIn";
-
+  static const String _userId = "userId";
 
   static void write(String key, dynamic value) {
     _box.write(key, value);
@@ -39,7 +39,11 @@ class StorageUtil {
     return write(_isLoggedIn, value);
   }
 
+  static int getUserId() {
+    return read(_userId, false);
+  }
 
+  static void setUserId(int value) {
+    return write(_userId, value);
+  }
 }
-
-

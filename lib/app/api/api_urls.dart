@@ -9,4 +9,5 @@ class ApiUrls {
   static const String forgotPassword = "/forgot_password.php";
   static const String changePassword = "/change-password.php";
   static const String storeInterests = "/store-interests.php";
+  static const String getInterests = "/get-interests.php";
 }
