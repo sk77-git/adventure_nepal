@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:adventure_nepal/app/modules/home/controllers/home_controller.dart';
 import 'package:adventure_nepal/app/theme/app_images.dart';
@@ -9,17 +8,14 @@ import 'package:adventure_nepal/app/widgets/book_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:palette_generator/palette_generator.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
 
-import '../../../api/api_client.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_dimens.dart';
 import '../../../widgets/circle_indicator.dart';
 
 class HomeView extends StatefulWidget {
-  HomeView({Key? key}) : super(key: key);
+  const HomeView({Key? key}) : super(key: key);
 
   @override
   State<HomeView> createState() => _HomeViewState();
@@ -294,33 +290,14 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
       final PaletteGenerator paletteGenerator =
           await PaletteGenerator.fromImageProvider(AssetImage(image),
               size: const Size(200, 100));
-      colors.add(paletteGenerator.lightMutedColor ?? PaletteColor(Colors.indigo, 2));
+      colors.add(
+          paletteGenerator.lightMutedColor ?? PaletteColor(Colors.indigo, 2));
     }
     setState(() {});
   }
 
-
- /* Widget weatherWidget(BuildContext context) {
-    return Obx(() {
-      final response = controller.weatherResponse.value;
-      switch (response.status) {
-        case ApiStatus.LOADING:
-          log("ApiStatus.LOADING");
-          return weatherAppBar();
-        case ApiStatus.SUCCESS:
-          log("ApiStatus.COMPLETED");
-          return weatherAppBar();
-        case ApiStatus.ERROR:
-          log("ApiStatus.ERROR");
-          return weatherAppBar();
-        default:
-          log("ApiStatus.default");
-          return weatherAppBar();
-      }
-    });
-  }*/
-
-  /*AppBar appBar(){
+  AppBar weatherAppBar() {
+    var data = controller.weatherResponse.value.response;
     return AppBar(
       toolbarHeight: 70,
       title: Column(
@@ -328,13 +305,14 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           AppText(
-            text: 'Location Unknown',
+            text: data?.location?.name ?? AppStrings.appName,
             fontWeight: FontWeight.bold,
             fontSize: AppDimens.veryLargeTextSize,
             color: AppColors.textColor.withOpacity(0.7),
           ),
           AppText(
-            text: 'Weather: n/a',
+            text:
+                "${data?.current?.condition?.text ?? "Getting weather"} - ${(data?.current?.feelslikeC ?? 0).toString()} °C",
             fontSize: AppDimens.smallTextSize,
             color: AppColors.textColor.withOpacity(0.5),
             fontWeight: FontWeight.normal,
@@ -342,45 +320,11 @@ class _HomeViewState extends State<HomeView> with TickerProviderStateMixin {
         ],
       ),
       actions: [
-        Container(
-          margin: const EdgeInsets.only(right: 10, top: 10, bottom: 10),
-          height: 40,
-          width: 50,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(AppDimens.cornerRadius),
-              color: Colors.transparent,
-              image: const DecorationImage(
-                  image: AssetImage(AppImages.cloudyDay), fit: BoxFit.cover)),
-        )
-      ],
-    );
-  }*/
-  AppBar weatherAppBar(){
-    var data= controller.weatherResponse.value.response;
-    return AppBar(
-      toolbarHeight: 70,
-      title: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          AppText(
-            text: data?.location?.name??AppStrings.appName,
-            fontWeight: FontWeight.bold,
-            fontSize: AppDimens.veryLargeTextSize,
-            color: AppColors.textColor.withOpacity(0.7),
-          ),
-          AppText(
-            text: "${data?.current?.condition?.text??"Getting weather"} - ${(data?.current?.feelslikeC??0).toString()} °C",
-            fontSize: AppDimens.smallTextSize,
-            color: AppColors.textColor.withOpacity(0.5),
-            fontWeight: FontWeight.normal,
-          ),
-        ],
-      ),
-      actions: [
-        Image.network("https:${data?.current?.condition?.icon??""}", errorBuilder: (context, obj, stackTrace){
+        Image.network("https:${data?.current?.condition?.icon ?? ""}",
+            errorBuilder: (context, obj, stackTrace) {
           return Container(
-              margin: const EdgeInsets.only(right: 10, bottom: 10, top: 10, left: 10),
+              margin: const EdgeInsets.only(
+                  right: 10, bottom: 10, top: 10, left: 10),
               child: Image.asset(AppImages.cloudyDay));
         })
       ],

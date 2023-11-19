@@ -5,6 +5,7 @@ import 'package:adventure_nepal/app/modules/home/model/place_response.dart';
 import 'package:adventure_nepal/app/modules/place_detail/views/place_detail_view.dart';
 import 'package:adventure_nepal/app/modules/profile/views/profile_view.dart';
 import 'package:adventure_nepal/app/theme/app_images.dart';
+import 'package:adventure_nepal/app/utils/storage_util.dart';
 import 'package:adventure_nepal/app/widgets/activity_card.dart';
 import 'package:adventure_nepal/app/widgets/place_card.dart';
 import 'package:flutter/material.dart';
@@ -71,14 +72,14 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Obx(() => AppText(
+                text: controller.greeting.value,
+                fontWeight: FontWeight.bold,
+                fontSize: AppDimens.veryLargeTextSize,
+                color: AppColors.textColor.withOpacity(0.7),
+              )),
           AppText(
-            text: "Good Evening!",
-            fontWeight: FontWeight.bold,
-            fontSize: AppDimens.veryLargeTextSize,
-            color: AppColors.textColor.withOpacity(0.7),
-          ),
-          AppText(
-            text: "Shrawan Kumar",
+            text: StorageUtil.getUser()?.fullName ?? "N/A",
             fontSize: AppDimens.smallTextSize,
             color: AppColors.textColor.withOpacity(0.5),
             fontWeight: FontWeight.normal,
@@ -88,7 +89,7 @@ class _HomePageState extends State<HomePage> {
       actions: [
         IconButton(
           onPressed: () {
-            Get.to(() => ProfileView());
+            Get.to(() => const ProfileView());
           },
           icon: Container(
             height: 50.0,

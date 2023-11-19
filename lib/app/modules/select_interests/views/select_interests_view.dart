@@ -14,7 +14,9 @@ import '../../../theme/app_images.dart';
 import '../../../theme/app_styles.dart';
 
 class SelectInterestsView extends StatefulWidget {
-  const SelectInterestsView({Key? key}) : super(key: key);
+  const SelectInterestsView({Key? key, this.isFromProfile = false})
+      : super(key: key);
+  final bool isFromProfile;
 
   @override
   State<SelectInterestsView> createState() => _SelectInterestsViewState();
@@ -111,34 +113,18 @@ class _SelectInterestsViewState extends State<SelectInterestsView> {
                       ],
                     ),
                     const Spacer(),
-                    Row(
-                      children: [
-                        AppButton(text: "Skip", onTap: () {}),
-                        const Spacer(),
-                        Obx(() {
-                          final data =
-                              controller.storeUserInterestsResponse.value;
-                          switch (data.status) {
-                            case ApiStatus.LOADING:
-                              return const LoadingWidget();
-                            default:
-                              return AppButton(
-                                  text: "Continue",
-                                  onTap: () {
-                                    controller
-                                        .storeInterests(9, selectedInterests)
-                                        .then((value) {
-                                      if (value.status == ApiStatus.SUCCESS) {
-                                        Get.offAll(() => const HomePage());
-                                        SnackBarUtil.showSnackBar(
-                                            message: 'Interests Updated');
-                                      } else {}
-                                    });
-                                  });
-                          }
-                        })
-                      ],
-                    )
+                    widget.isFromProfile
+                        ? saveButton(true)
+                        : Row(
+                            children: [
+                              AppButton(text: "Skip", onTap: () {}),
+                              const Spacer(),
+                              saveButton(false),
+                            ],
+                          ),
+                    const SizedBox(
+                      height: 10,
+                    ),
                   ],
                 ),
               );
@@ -152,5 +138,27 @@ class _SelectInterestsViewState extends State<SelectInterestsView> {
         }
       }),
     );
+  }
+
+  Widget saveButton(bool fullWidth) {
+    return Obx(() {
+      final data = controller.storeUserInterestsResponse.value;
+      switch (data.status) {
+        case ApiStatus.LOADING:
+          return const LoadingWidget();
+        default:
+          return AppButton(
+              fullWidth: fullWidth,
+              text: "Save",
+              onTap: () {
+                controller.storeInterests(9, selectedInterests).then((value) {
+                  if (value.status == ApiStatus.SUCCESS) {
+                    Get.offAll(() => const HomePage());
+                    SnackBarUtil.showSnackBar(message: 'Interests Updated');
+                  } else {}
+                });
+              });
+      }
+    });
   }
 }

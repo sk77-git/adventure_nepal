@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:adventure_nepal/app/modules/home/views/home_page.dart';
 import 'package:adventure_nepal/app/modules/otp_verify/views/otp_verify_view.dart';
 import 'package:adventure_nepal/app/utils/storage_util.dart';
@@ -162,7 +164,9 @@ class _LoginViewState extends State<LoginView> {
                 if (value.response?.isVerified == true) {
                   Get.offAll(() => const HomePage());
                   StorageUtil.setIsLoggedIn(true);
-                  StorageUtil.setUserId(9);
+                  StorageUtil.setUser(value.response?.user);
+                  log("SavedUser:${StorageUtil.getUser()?.toJson().toString()}");
+                  StorageUtil.setUserId(value.response?.user?.id ?? -1);
                 } else {
                   Get.to(() => OtpVerifyView(
                         email: email ?? "",

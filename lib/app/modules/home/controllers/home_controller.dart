@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:adventure_nepal/app/modules/home/model/activities_response.dart';
 import 'package:adventure_nepal/app/modules/home/model/place_response.dart';
 import 'package:adventure_nepal/app/repository/activities_repo.dart';
@@ -24,35 +26,29 @@ class HomeController extends GetxController {
   String? _currentAddress;
   Position? _currentPosition;
   var searchTextFieldController = TextEditingController();
+  var greeting = "Good Morning!".obs;
 
   @override
   void onInit() {
     super.onInit();
+    updateGreeting();
     _getCurrentPosition();
     _getPlaces();
     _getActivities();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  /*void getWeather(String location) async {
-    isLoading.value = true;
-    var data = await Api().fetchWeather(location);
-    log("getWeather:$data");
-    if (data != null) {
-      weatherResponse.clear();
-      weatherResponse.add(WeatherResponse.fromJson(data));
+  void updateGreeting() {
+    DateTime now = DateTime.now();
+    int currentHour = now.hour;
+    if (currentHour >= 0 && currentHour < 12) {
+      greeting.value = 'Good Morning!';
+    } else if (currentHour >= 12 && currentHour < 17) {
+      greeting.value = 'Good Afternoon!';
+    } else {
+      greeting.value = 'Good Evening!';
     }
-    isLoading.value = false;
-  }*/
+    Timer(const Duration(minutes: 1), updateGreeting);
+  }
 
   Future<void> _getCurrentPosition() async {
     final hasPermission = await _handleLocationPermission();
