@@ -170,7 +170,7 @@ class _LoginViewState extends State<LoginView> {
                 } else {
                   Get.to(() => OtpVerifyView(
                         email: email ?? "",
-                        purpose: "forgot-password",
+                        purpose: "signup",
                       ));
                 }
               } else {

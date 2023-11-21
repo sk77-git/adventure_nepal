@@ -26,7 +26,7 @@ class ActivityDetailView extends GetView<ActivityDetailController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Image.network(
-              activity?.icon ?? "",
+              activity?.thumbnail ?? "",
               errorBuilder: (a, b, c) {
                 return Image.asset(AppImages.appLogo);
               },
@@ -35,15 +35,15 @@ class ActivityDetailView extends GetView<ActivityDetailController> {
               height: 16,
             ),
             AppText(
-              text: activity?.title ?? "",
+              text: activity?.name ?? "",
               style: AppStyles.headingStyle
                   .copyWith(fontSize: 30, color: AppColors.mainColor),
             ),
-            AppText(
-              text:
-                  "Preferred at: ${activity?.maxTemp ?? "n/a"}°C - ${activity?.minTemp ?? ""}°C",
-              style: AppStyles.subtitleStyle,
-            ),
+            // AppText(
+            //   text:
+            //       "Preferred at: ${activity?.maxTemp ?? "n/a"}°C - ${activity?.minTemp ?? ""}°C",
+            //   style: AppStyles.subtitleStyle,
+            // ),
             const SizedBox(
               height: 16,
             ),

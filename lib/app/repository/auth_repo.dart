@@ -14,6 +14,17 @@ class AuthRepo {
     return response;
   }
 
+  static Future<ApiResponse<BasicApiResponse>> register(
+      dynamic signupRequest) async {
+    final response = await ApiClient.postApi<BasicApiResponse>(
+      ApiUrls.register,
+      isTokenRequired: false,
+      requestBody: signupRequest,
+      responseType: (json) => BasicApiResponse.fromJson(json),
+    );
+    return response;
+  }
+
   static Future<ApiResponse<BasicApiResponse>> verifyOtp(
       dynamic otpVerifyRequest) async {
     final response = await ApiClient.postApi<BasicApiResponse>(

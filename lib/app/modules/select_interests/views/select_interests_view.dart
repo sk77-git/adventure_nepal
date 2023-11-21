@@ -151,7 +151,9 @@ class _SelectInterestsViewState extends State<SelectInterestsView> {
               fullWidth: fullWidth,
               text: "Save",
               onTap: () {
-                controller.storeInterests(9, selectedInterests).then((value) {
+                controller
+                    .storeInterests(StorageUtil.getUserId(), selectedInterests)
+                    .then((value) {
                   if (value.status == ApiStatus.SUCCESS) {
                     Get.offAll(() => const HomePage());
                     SnackBarUtil.showSnackBar(message: 'Interests Updated');

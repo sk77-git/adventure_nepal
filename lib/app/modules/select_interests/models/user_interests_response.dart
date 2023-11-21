@@ -8,7 +8,9 @@ class UserInterestsResponse {
   UserInterestsResponse.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    interests = json['interests'].cast<String>();
+    if (json['interests'] != null) {
+      interests = json['interests'].cast<String>();
+    }
   }
 
   Map<String, dynamic> toJson() {

@@ -46,11 +46,11 @@ class PlaceDetailView extends GetView<PlaceDetailController> {
             const SizedBox(
               height: 16,
             ),
-            AppText(
-              text: "Nearby Places: ${place?.nearbyPlaces ?? ""}",
-              style: AppStyles.titleStyle
-                  .copyWith(color: AppColors.mainColor.withOpacity(0.5)),
-            ),
+            // AppText(
+            //   text: "Nearby Places: ${place?.nearbyPlaces ?? ""}",
+            //   style: AppStyles.titleStyle
+            //       .copyWith(color: AppColors.mainColor.withOpacity(0.5)),
+            // ),
             const SizedBox(
               height: 16,
             ),

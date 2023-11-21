@@ -29,61 +29,41 @@ class ActivitiesResponse {
 
 class Activity {
   int? id;
-  String? createdAt;
-  String? updatedAt;
-  String? title;
+  String? name;
   String? description;
   String? html;
-  String? icon;
-  String? tags;
-  String? cities;
+  String? thumbnail;
   String? weathers;
-  String? minTemp;
-  String? maxTemp;
+  String? categories;
 
   Activity(
       {this.id,
-      this.createdAt,
-      this.updatedAt,
-      this.title,
+      this.name,
       this.description,
       this.html,
-      this.icon,
-      this.tags,
-      this.cities,
+      this.thumbnail,
       this.weathers,
-      this.minTemp,
-      this.maxTemp});
+      this.categories});
 
   Activity.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    title = json['title'];
+    name = json['name'];
     description = json['description'];
     html = json['html'];
-    icon = json['icon'];
-    tags = json['tags'];
-    cities = json['cities'];
+    thumbnail = json['thumbnail'];
     weathers = json['weathers'];
-    minTemp = json['min_temp'];
-    maxTemp = json['max_temp'];
+    categories = json['categories'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['title'] = this.title;
+    data['name'] = this.name;
     data['description'] = this.description;
     data['html'] = this.html;
-    data['icon'] = this.icon;
-    data['tags'] = this.tags;
-    data['cities'] = this.cities;
+    data['thumbnail'] = this.thumbnail;
     data['weathers'] = this.weathers;
-    data['min_temp'] = this.minTemp;
-    data['max_temp'] = this.maxTemp;
+    data['categories'] = this.categories;
     return data;
   }
 }

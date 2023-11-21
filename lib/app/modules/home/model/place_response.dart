@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class PlacesResponse {
   String? status;
   String? message;
@@ -30,57 +28,50 @@ class PlacesResponse {
 }
 
 class Place {
-  final int? id;
-  final String? name;
-  final List<String>? images;
-  final String? thumbnail;
-  final String? description;
-  final String? html;
-  final double? lat;
-  final double? long;
-  final String? tags;
-  final String? nearbyPlaces;
+  int? id;
+  String? name;
+  String? thumbnail;
+  String? description;
+  String? html;
+  String? lat;
+  String? long;
+  String? weathers;
+  String? categories;
 
-  Place({
-    this.id,
-    this.name,
-    this.images,
-    this.thumbnail,
-    this.description,
-    this.html,
-    this.lat,
-    this.long,
-    this.tags,
-    this.nearbyPlaces,
-  });
+  Place(
+      {this.id,
+      this.name,
+      this.thumbnail,
+      this.description,
+      this.html,
+      this.lat,
+      this.long,
+      this.weathers,
+      this.categories});
 
-  factory Place.fromJson(Map<String, dynamic> json) {
-    return Place(
-      id: json['id'],
-      name: json['name'],
-      images: List<String>.from(jsonDecode(json['images'])),
-      thumbnail: json['thumbnail'],
-      description: json['description'],
-      html: json['html'],
-      lat: double.parse(json['lat']),
-      long: double.parse(json['lang']),
-      tags: json['tags'],
-      nearbyPlaces: json['nearby_places'],
-    );
+  Place.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    thumbnail = json['thumbnail'];
+    description = json['description'];
+    html = json['html'];
+    lat = json['lat'];
+    long = json['long'];
+    weathers = json['weathers'];
+    categories = json['categories'];
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'name': name,
-      'images': jsonEncode(images),
-      'thumbnail': thumbnail,
-      'description': description,
-      'html': html,
-      'lat': lat.toString(),
-      'lang': long.toString(),
-      'tags': jsonEncode(tags),
-      'nearby_places': jsonEncode(nearbyPlaces),
-    };
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['thumbnail'] = this.thumbnail;
+    data['description'] = this.description;
+    data['html'] = this.html;
+    data['lat'] = this.lat;
+    data['long'] = this.long;
+    data['weathers'] = this.weathers;
+    data['categories'] = this.categories;
+    return data;
   }
 }

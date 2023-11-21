@@ -295,8 +295,8 @@ class _HomePageState extends State<HomePage> {
                             Get.to(() => ActivityDetailView(activity));
                           },
                           child: ActivityCard(
-                              title: activity?.title ?? "N/A",
-                              imageUrl: activity?.icon ?? ""),
+                              title: activity?.name ?? "N/A",
+                              imageUrl: activity?.thumbnail ?? ""),
                         );
                       }),
                 )
