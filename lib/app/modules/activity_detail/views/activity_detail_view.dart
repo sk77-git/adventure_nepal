@@ -1,5 +1,6 @@
 import 'package:adventure_nepal/app/theme/app_colors.dart';
 import 'package:adventure_nepal/app/theme/app_styles.dart';
+import 'package:adventure_nepal/app/utils/string_util.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -53,6 +54,17 @@ class ActivityDetailView extends GetView<ActivityDetailController> {
             Text(
               "About this activity:\n${activity?.description ?? ""}",
               style: AppStyles.titleStyle.copyWith(color: AppColors.grey),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            Text(
+              "Preferred weathers:\n${StringUtil.arrayToString(activity?.weathers ?? [])}",
+              style: AppStyles.titleStyle
+                  .copyWith(color: AppColors.primary.withOpacity(0.5)),
             ),
           ],
         ),

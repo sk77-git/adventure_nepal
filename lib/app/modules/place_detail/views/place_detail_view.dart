@@ -2,6 +2,7 @@ import 'package:adventure_nepal/app/modules/home/model/place_response.dart';
 import 'package:adventure_nepal/app/theme/app_colors.dart';
 import 'package:adventure_nepal/app/theme/app_images.dart';
 import 'package:adventure_nepal/app/theme/app_styles.dart';
+import 'package:adventure_nepal/app/utils/string_util.dart';
 import 'package:adventure_nepal/app/widgets/app_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -36,8 +37,12 @@ class PlaceDetailView extends GetView<PlaceDetailController> {
             ),
             AppText(
               text: place?.name ?? "",
+              maxLines: 2,
               style: AppStyles.headingStyle
                   .copyWith(fontSize: 30, color: AppColors.mainColor),
+            ),
+            const SizedBox(
+              height: 8,
             ),
             AppText(
               text: "Lat Long: ${place?.lat ?? ""}, ${place?.long ?? ""}",
@@ -56,7 +61,16 @@ class PlaceDetailView extends GetView<PlaceDetailController> {
             ),
             Text(
               "About this place:\n${place?.description ?? ""}",
-              style: AppStyles.titleStyle.copyWith(color: AppColors.grey),
+              style: AppStyles.titleStyle.copyWith(color: Colors.black54),
+            ),
+
+            const SizedBox(
+              height: 16,
+            ),
+            Text(
+              "Preferred weathers:\n${StringUtil.arrayToString(place?.weathers ?? [])}",
+              style: AppStyles.titleStyle
+                  .copyWith(color: AppColors.primary.withOpacity(0.5)),
             ),
           ],
         ),

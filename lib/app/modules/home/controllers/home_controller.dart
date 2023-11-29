@@ -36,9 +36,13 @@ class HomeController extends GetxController {
     super.onInit();
     updateGreeting();
     _getCurrentPosition().then((value) {
-      _getPlaces(StorageUtil.getUserId(), _currentPosition?.latitude,
-          _currentPosition?.longitude, "");
-      _getActivities();
+      _getPlaces(
+          StorageUtil.getUserId(),
+          _currentPosition?.latitude,
+          _currentPosition?.longitude,
+          weatherResponse.value.response?.current?.condition?.text ?? "");
+      _getActivities(StorageUtil.getUserId(),
+          weatherResponse.value.response?.current?.condition?.text ?? "");
     });
   }
 
@@ -59,7 +63,7 @@ class HomeController extends GetxController {
     final hasPermission = await _handleLocationPermission();
     if (!hasPermission) {
       /*If problem in permission show weather of Kathmandu initially*/
-      getWeather("Kathmandu");
+      await getWeather("Kathmandu");
       return;
     }
     await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
@@ -119,9 +123,10 @@ class HomeController extends GetxController {
     places = placesResponse.value.response?.places ?? [];
   }
 
-  Future<void> _getActivities() async {
+  Future<void> _getActivities(int userId, String weather) async {
     activitiesResponse.value = ApiResponse<ActivitiesResponse>.loading();
-    activitiesResponse.value = await ActivitiesRepo.getActivities();
+    activitiesResponse.value =
+        await ActivitiesRepo.getActivities(userId, weather);
     activities = activitiesResponse.value.response?.activities ?? [];
   }
 }

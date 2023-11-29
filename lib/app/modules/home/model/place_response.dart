@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class PlacesResponse {
   String? status;
   String? message;
@@ -35,19 +37,20 @@ class Place {
   String? html;
   String? lat;
   String? long;
-  String? weathers;
-  String? categories;
+  List<String>? weathers; // Updated data type
+  List<String>? categories; // Updated data type
 
-  Place(
-      {this.id,
-      this.name,
-      this.thumbnail,
-      this.description,
-      this.html,
-      this.lat,
-      this.long,
-      this.weathers,
-      this.categories});
+  Place({
+    this.id,
+    this.name,
+    this.thumbnail,
+    this.description,
+    this.html,
+    this.lat,
+    this.long,
+    this.weathers,
+    this.categories,
+  });
 
   Place.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -57,21 +60,29 @@ class Place {
     html = json['html'];
     lat = json['lat'];
     long = json['long'];
-    weathers = json['weathers'];
-    categories = json['categories'];
+    weathers = json['weathers'] != null
+        ? List<String>.from(jsonDecode(json['weathers']))
+        : null; // Convert string to list
+    categories = json['categories'] != null
+        ? List<String>.from(jsonDecode(json['categories']))
+        : null; // Convert string to list
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['thumbnail'] = this.thumbnail;
-    data['description'] = this.description;
-    data['html'] = this.html;
-    data['lat'] = this.lat;
-    data['long'] = this.long;
-    data['weathers'] = this.weathers;
-    data['categories'] = this.categories;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['id'] = id;
+    data['name'] = name;
+    data['thumbnail'] = thumbnail;
+    data['description'] = description;
+    data['html'] = html;
+    data['lat'] = lat;
+    data['long'] = long;
+    data['weathers'] = weathers != null
+        ? jsonEncode(weathers)
+        : null; // Convert list to string
+    data['categories'] = categories != null
+        ? jsonEncode(categories)
+        : null; // Convert list to string
     return data;
   }
 }

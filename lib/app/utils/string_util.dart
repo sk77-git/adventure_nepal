@@ -24,4 +24,17 @@ class StringUtil {
       return initials.toUpperCase();
     }
   }
+
+  // Converts an array of strings to a comma-separated single string
+  static String arrayToString(List<String> strings) {
+    return strings.join(", ");
+  }
+
+// Converts a comma-separated single string to an array of strings
+  static List<String> stringToArray(String commaSeparatedString) {
+    return commaSeparatedString
+        .split(", ")
+        .where((str) => str.isNotEmpty)
+        .toList();
+  }
 }

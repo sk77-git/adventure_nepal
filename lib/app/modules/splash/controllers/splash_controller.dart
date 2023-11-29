@@ -10,16 +10,6 @@ class SplashController extends GetxController {
     splash();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
   Future<void> splash() async {
     Future.delayed(const Duration(seconds: 2), () {
       bool isLoggedIn = StorageUtil.isLoggedIn();

@@ -302,8 +302,8 @@ class _HomePageState extends State<HomePage> {
             return controller.activities.isEmpty
                 ? const ErrorsWidget(
                     height: 230,
-                    title: "Recommended Places",
-                    error: "No Places Found")
+                    title: "Recommended Activities",
+                    error: "No Activities Found")
                 : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
