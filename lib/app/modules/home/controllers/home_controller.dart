@@ -4,6 +4,7 @@ import 'package:adventure_nepal/app/modules/home/model/activities_response.dart'
 import 'package:adventure_nepal/app/modules/home/model/place_response.dart';
 import 'package:adventure_nepal/app/repository/activities_repo.dart';
 import 'package:adventure_nepal/app/repository/main_repo.dart';
+import 'package:adventure_nepal/app/utils/storage_util.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -21,7 +22,9 @@ class HomeController extends GetxController {
 
   var weatherResponse = ApiResponse<WeatherResponse>.initial().obs;
   var placesResponse = ApiResponse<PlacesResponse>.initial().obs;
+  List<Place> places = [];
   var activitiesResponse = ApiResponse<ActivitiesResponse>.initial().obs;
+  List<Activity> activities = [];
 
   String? _currentAddress;
   Position? _currentPosition;
@@ -32,9 +35,11 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     updateGreeting();
-    _getCurrentPosition();
-    _getPlaces();
-    _getActivities();
+    _getCurrentPosition().then((value) {
+      _getPlaces(StorageUtil.getUserId(), _currentPosition?.latitude,
+          _currentPosition?.longitude, "");
+      _getActivities();
+    });
   }
 
   void updateGreeting() {
@@ -106,15 +111,17 @@ class HomeController extends GetxController {
     weatherResponse.value = response;
   }
 
-  Future<void> _getPlaces() async {
+  Future<void> _getPlaces(
+      int userId, double? latitude, double? longitude, String weather) async {
     placesResponse.value = ApiResponse<PlacesResponse>.loading();
-    final response = await PlacesRepo.getPlaces();
-    placesResponse.value = response;
+    placesResponse.value =
+        await PlacesRepo.getPlaces(userId, latitude, longitude, weather);
+    places = placesResponse.value.response?.places ?? [];
   }
 
   Future<void> _getActivities() async {
     activitiesResponse.value = ApiResponse<ActivitiesResponse>.loading();
-    final response = await ActivitiesRepo.getActivities();
-    activitiesResponse.value = response;
+    activitiesResponse.value = await ActivitiesRepo.getActivities();
+    activities = activitiesResponse.value.response?.activities ?? [];
   }
 }

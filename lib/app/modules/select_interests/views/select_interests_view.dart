@@ -3,6 +3,7 @@ import 'package:adventure_nepal/app/modules/home/views/home_page.dart';
 import 'package:adventure_nepal/app/modules/select_interests/controllers/select_interests_controller.dart';
 import 'package:adventure_nepal/app/utils/storage_util.dart';
 import 'package:adventure_nepal/app/widgets/app_button.dart';
+import 'package:adventure_nepal/app/widgets/full_page_info_widget.dart';
 import 'package:adventure_nepal/app/widgets/loading_widget.dart';
 import 'package:adventure_nepal/app/widgets/selectable_button.dart';
 import 'package:adventure_nepal/app/widgets/snackbar.dart';
@@ -25,17 +26,7 @@ class SelectInterestsView extends StatefulWidget {
 class _SelectInterestsViewState extends State<SelectInterestsView> {
   final SelectInterestsController controller =
       Get.put(SelectInterestsController());
-  List<String> choices = [
-    'Mountains',
-    'Temples',
-    'Villages',
-    'Cities',
-    'Rivers',
-    'Lakes',
-    'Hiking',
-    'Camping',
-    "Foods"
-  ];
+  List<String> choices = [];
   List<String> selectedInterests = [];
   List<String> userInterests = [];
 
@@ -43,7 +34,10 @@ class _SelectInterestsViewState extends State<SelectInterestsView> {
   void initState() {
     super.initState();
     controller.getUserInterests(StorageUtil.getUserId()).then((value) {
-      value.response?.interests?.forEach((element) {
+      value.response?.allCategories?.forEach((element) {
+        choices.add(element.category ?? "");
+      });
+      value.response?.userCategories?.forEach((element) {
         userInterests.add(element);
         selectedInterests.add(element);
       });
@@ -98,7 +92,7 @@ class _SelectInterestsViewState extends State<SelectInterestsView> {
                         ...List.generate(
                             choices.length,
                             (index) => SelectableButton(
-                                  text: choices[index],
+                                  text: choices[index].capitalize ?? "",
                                   onTap: (value) {
                                     if (value) {
                                       selectedInterests.add(choices[index]);
@@ -129,6 +123,12 @@ class _SelectInterestsViewState extends State<SelectInterestsView> {
                 ),
               );
             }
+          case ApiStatus.ERROR:
+            {
+              return FullPageInfoWidget(
+                message: data.message,
+              );
+            }
           default:
             {
               return const Center(
@@ -157,7 +157,10 @@ class _SelectInterestsViewState extends State<SelectInterestsView> {
                   if (value.status == ApiStatus.SUCCESS) {
                     Get.offAll(() => const HomePage());
                     SnackBarUtil.showSnackBar(message: 'Interests Updated');
-                  } else {}
+                  } else {
+                    SnackBarUtil.showSnackBar(
+                        message: value.message ?? "Something went wrong");
+                  }
                 });
               });
       }

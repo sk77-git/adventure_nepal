@@ -1,5 +1,5 @@
-1. Create Interests api to store and get by user id
-2. Integrate interests apis in flutter
-3. Change login response to include user model
+1. Create Interests api to store and get by user id -> Done
+2. Integrate interests apis in flutter -> Done
+3. Change login response to include user model -
 4. Show user information in profile
 5. Implement algorithm

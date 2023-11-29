@@ -30,7 +30,7 @@ class User {
   String? fullName;
   String? email;
   String? password;
-  String? interests;
+  String? categories;
   String? otp;
   int? isVerified;
   String? createdAt;
@@ -42,7 +42,7 @@ class User {
       this.fullName,
       this.email,
       this.password,
-      this.interests,
+      this.categories,
       this.otp,
       this.isVerified,
       this.createdAt,
@@ -54,7 +54,7 @@ class User {
     fullName = json['full_name'];
     email = json['email'];
     password = json['password'];
-    interests = json['interests'];
+    categories = json['categories'];
     otp = json['otp'];
     isVerified = json['is_verified'];
     createdAt = json['created_at'];
@@ -68,7 +68,7 @@ class User {
     data['full_name'] = this.fullName;
     data['email'] = this.email;
     data['password'] = this.password;
-    data['interests'] = this.interests;
+    data['categories'] = this.categories;
     data['otp'] = this.otp;
     data['is_verified'] = this.isVerified;
     data['created_at'] = this.createdAt;

@@ -107,24 +107,31 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget weatherCard(BuildContext context) {
-    return Container(
-      width: double.maxFinite,
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-          color: AppColors.mainColor.withOpacity(0.1),
-          borderRadius: const BorderRadius.all(Radius.circular(10))),
-      child: Obx(() {
-        var response = controller.weatherResponse.value;
-        switch (response.status) {
-          case ApiStatus.LOADING:
-            {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-          case ApiStatus.SUCCESS:
-            {
-              return Column(
+    return Obx(() {
+      var response = controller.weatherResponse.value;
+      switch (response.status) {
+        case ApiStatus.LOADING:
+          {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        case ApiStatus.ERROR:
+          {
+            return ErrorsWidget(
+                height: 230,
+                title: "Weather Information",
+                error: controller.placesResponse.value.message ?? "");
+          }
+        case ApiStatus.SUCCESS:
+          {
+            return Container(
+              width: double.maxFinite,
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                  color: AppColors.mainColor.withOpacity(0.1),
+                  borderRadius: const BorderRadius.all(Radius.circular(10))),
+              child: Column(
                 children: [
                   Row(
                     children: [
@@ -196,59 +203,72 @@ class _HomePageState extends State<HomePage> {
                     ],
                   )
                 ],
-              );
-            }
-          default:
-            {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-        }
-      }),
-    );
+              ),
+            );
+          }
+        default:
+          {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+      }
+    });
   }
 
   Widget recommendedPlaces() {
     return Obx(() {
-      var response = controller.placesResponse.value;
-      switch (response.status) {
+      var data = controller.placesResponse.value;
+      switch (data.status) {
         case ApiStatus.LOADING:
           {
             return const Center(
               child: CircularProgressIndicator(),
             );
           }
+        case ApiStatus.ERROR:
+          {
+            return ErrorsWidget(
+                height: 230,
+                title: "Recommended Places",
+                error: controller.placesResponse.value.message ?? "");
+          }
         case ApiStatus.SUCCESS:
           {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                AppText(
-                    text: "Recommended Places", style: AppStyles.headingStyle),
-                const SizedBox(
-                  height: 16,
-                ),
-                SizedBox(
-                  height: 230,
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: response.response?.places?.length ?? 0,
-                      itemBuilder: (ctx, index) {
-                        Place? place = response.response?.places![index];
-                        return GestureDetector(
-                          onTap: () {
-                            Get.to(() => PlaceDetailView(place));
-                          },
-                          child: PlaceCard(
-                              title: place?.name ?? "N/A",
-                              imageUrl: place?.thumbnail ?? ""),
-                        );
-                      }),
-                )
-              ],
-            );
+            return controller.places.isEmpty
+                ? const ErrorsWidget(
+                    height: 230,
+                    title: "Recommended Places",
+                    error: "No Places Found")
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      AppText(
+                          text: "Recommended Places",
+                          style: AppStyles.headingStyle),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      SizedBox(
+                        height: 230,
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: data.response?.places?.length ?? 0,
+                            itemBuilder: (ctx, index) {
+                              Place? place = data.response?.places![index];
+                              return GestureDetector(
+                                onTap: () {
+                                  Get.to(() => PlaceDetailView(place));
+                                },
+                                child: PlaceCard(
+                                    title: place?.name ?? "N/A",
+                                    imageUrl: place?.thumbnail ?? ""),
+                              );
+                            }),
+                      )
+                    ],
+                  );
           }
         default:
           {
@@ -270,38 +290,51 @@ class _HomePageState extends State<HomePage> {
               child: CircularProgressIndicator(),
             );
           }
+        case ApiStatus.ERROR:
+          {
+            return ErrorsWidget(
+                height: 230,
+                title: "Recommended Activities",
+                error: controller.placesResponse.value.message ?? "");
+          }
         case ApiStatus.SUCCESS:
           {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                AppText(
-                    text: "Recommended Activities",
-                    style: AppStyles.headingStyle),
-                const SizedBox(
-                  height: 16,
-                ),
-                SizedBox(
-                  height: 120,
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: response.response?.activities?.length ?? 0,
-                      itemBuilder: (ctx, index) {
-                        Activity? activity =
-                            response.response?.activities![index];
-                        return GestureDetector(
-                          onTap: () {
-                            Get.to(() => ActivityDetailView(activity));
-                          },
-                          child: ActivityCard(
-                              title: activity?.name ?? "N/A",
-                              imageUrl: activity?.thumbnail ?? ""),
-                        );
-                      }),
-                )
-              ],
-            );
+            return controller.activities.isEmpty
+                ? const ErrorsWidget(
+                    height: 230,
+                    title: "Recommended Places",
+                    error: "No Places Found")
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      AppText(
+                          text: "Recommended Activities",
+                          style: AppStyles.headingStyle),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      SizedBox(
+                        height: 120,
+                        child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount:
+                                response.response?.activities?.length ?? 0,
+                            itemBuilder: (ctx, index) {
+                              Activity? activity =
+                                  response.response?.activities![index];
+                              return GestureDetector(
+                                onTap: () {
+                                  Get.to(() => ActivityDetailView(activity));
+                                },
+                                child: ActivityCard(
+                                    title: activity?.name ?? "N/A",
+                                    imageUrl: activity?.thumbnail ?? ""),
+                              );
+                            }),
+                      )
+                    ],
+                  );
           }
         default:
           {
@@ -311,5 +344,42 @@ class _HomePageState extends State<HomePage> {
           }
       }
     });
+  }
+}
+
+class ErrorsWidget extends StatelessWidget {
+  const ErrorsWidget(
+      {super.key,
+      required this.height,
+      required this.title,
+      required this.error});
+
+  final double height;
+  final String title;
+  final String error;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.maxFinite,
+      decoration: BoxDecoration(
+          color: AppColors.mainColor.withOpacity(0.1),
+          borderRadius: const BorderRadius.all(Radius.circular(10))),
+      height: height,
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          AppText(text: title, style: AppStyles.headingStyle),
+          const SizedBox(
+            height: 16,
+          ),
+          SizedBox(width: 120, child: Image.asset(AppImages.info)),
+          const SizedBox(height: 16),
+          Text(error),
+        ],
+      ),
+    );
   }
 }
