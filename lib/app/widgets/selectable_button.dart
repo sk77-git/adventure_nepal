@@ -41,8 +41,7 @@ class _SelectableButtonState extends State<SelectableButton> {
       child: ElevatedButton(
         onPressed: _toggleSelected,
         style: ElevatedButton.styleFrom(
-          primary:
-              _isSelected ? AppColors.primary : AppColors.backgroundColorGrey,
+          backgroundColor: _isSelected ? AppColors.primary : AppColors.backgroundColorGrey,
           shape: RoundedRectangleBorder(
               side: const BorderSide(color: AppColors.grey, width: 1),
               borderRadius: BorderRadius.circular(4)),
