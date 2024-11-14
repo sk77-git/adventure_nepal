@@ -1,7 +1,8 @@
 class ApiUrls {
-  static const String baseUrl = "http://192.168.147.125/adv_nepal/api";
+  // static const String baseUrl = "http://192.168.147.125/adv_nepal/api";
+  // static const String baseUrl = "http://localhost/adv_nepal/api";
 
-  // static const String baseUrl = "http://10.0.2.2/adv_nepal/api";
+  static const String baseUrl = "http://10.0.2.2/adv_nepal/api";
   static const String getAllPlaces = "/get-places.php";
   static const String getAllActivities = "/get-activities.php";
   static const String login = "/signin.php";
